@@ -9,7 +9,12 @@ export default new Vuex.Store({
     isLogin: false,
     productsList: [],
     currentNotif: '',
-    currentErr: ''
+    currentErr: '',
+    currentCustomer: '',
+    currentCart: {
+      id: '',
+      products: []
+    }
   },
   mutations: {
     changeLoginStatus (state) {

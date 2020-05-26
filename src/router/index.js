@@ -4,6 +4,11 @@ import LandingPage from '../views/LandingPage.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
+import Cart from '../components/Cart.vue'
+import Customer from '../components/Customer.vue'
+import CustomerEdit from '../components/CustomerEdit.vue'
+import CurrentOrder from '../components/CurrentOrder.vue'
+import OrderHistory from '../components/History.vue'
 
 Vue.use(VueRouter)
 
@@ -12,6 +17,33 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/customer',
+    name: 'Customer',
+    component: Customer,
+    children: [
+      {
+        path: 'edit',
+        name: 'CustomerEdit',
+        component: CustomerEdit
+      }
+    ]
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
+  },
+  {
+    path: '/current_order',
+    name: 'CurrentOrder',
+    component: CurrentOrder
+  },
+  {
+    path: '/history',
+    name: 'OrderHistory',
+    component: OrderHistory
   },
   {
     path: '/',
