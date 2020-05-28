@@ -9,6 +9,7 @@ import Customer from '../components/Customer.vue'
 import CustomerEdit from '../components/CustomerEdit.vue'
 import CurrentOrder from '../components/CurrentOrder.vue'
 import OrderHistory from '../components/History.vue'
+import ProductDetail from '../components/ProductDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/product/:id',
+    name: 'ProductDetail',
+    component: ProductDetail
   },
   {
     path: '/customer',

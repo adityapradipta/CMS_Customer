@@ -1,23 +1,46 @@
 <template>
   <div class="col s12 m4">
-    <div class="card hoverable">
+    <div class="card medium hoverable">
       <div class="card-image">
-        <img :src="product.image_url">
+        <img :src="product.image_url" class="materialboxed">
       </div>
       <div class="card-content center">
-        <p>{{product.name}}</p>
-        <p>Price: {{product.price}}</p>
-        <p>Stock: {{product.stock}}</p>
-        <button>See Detail</button>
+        <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i></span>
+        <p id="productTitle" class="left-align">{{product.name}}</p>
+        <p class="left-align">Price: {{price}}</p>
+        <p class="left-align">Stock: {{product.stock}}</p>
+        <div class="center">
+          <button class="btn btn-small">Add to Cart</button>
+          <router-link :to="`/product/${product.id}`"><button class="btn btn-small">See Detail</button></router-link>
+        </div>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">{{product.name}}<i class="material-icons right">close</i></span>
+        <p class="left-align">Category: {{product.category}}</p>
+        <p class="left-align">Description:</p>
+        <p class="left-align">{{product.description}}</p>
+        <p class="left-align">Price: {{price}}</p>
+        <p class="left-align">Stock: {{product.stock}}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import M from 'materialize-css/dist/js/materialize.min.js'
+
 export default {
   name: 'ProductCard',
-  props: ['product']
+  props: ['product'],
+  data () {
+    return {
+      price: new Intl.NumberFormat('in-IN', { style: 'currency', currency: 'IDR' }).format(this.product.price)
+    }
+  },
+  mounted () {
+    const materialbox = document.querySelectorAll('.materialboxed')
+    M.Materialbox.init(materialbox)
+  }
 }
 </script>
 
@@ -26,5 +49,11 @@ export default {
     width: 200px;
     height: 200px;
     object-fit: cover;
+  }
+  .card {
+  }
+  #productTitle {
+    font-weight: bolder;
+    color: blue;
   }
 </style>
