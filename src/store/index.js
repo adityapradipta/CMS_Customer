@@ -13,8 +13,9 @@ export default new Vuex.Store({
     currentCustomer: '',
     currentCart: {
       id: '',
-      products: []
-    }
+      orders: []
+    },
+    customerCart: []
   },
   mutations: {
     changeLoginStatus (state) {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     },
     setCurrentCustomer (state, payload) {
       state.currentCustomer = payload
+    },
+    setCustomerCart (state, payload) {
+      state.customerCart = payload
     }
   },
   actions: {
@@ -58,6 +62,20 @@ export default new Vuex.Store({
       })
         .then(response => {
           context.commit('setCurrentCustomer', response.data.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchCustomerCart (context) {
+      const customerId = localStorage.currentUserId
+      server({
+        method: 'get',
+        url: `/customer/${customerId}/cart`
+      })
+        .then(response => {
+          // console.log(response.data.data)
+          context.commit('setCustomerCart', response.data.data)
         })
         .catch(err => {
           console.log(err)

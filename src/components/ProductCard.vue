@@ -16,11 +16,14 @@
       </div>
       <div class="card-reveal">
         <span class="card-title grey-text text-darken-4">{{product.name}}<i class="material-icons right">close</i></span>
-        <p class="left-align">Category: {{product.category}}</p>
-        <p class="left-align">Description:</p>
+        <h6 class="left-align">Category:</h6>
+        <p class="left-align">{{product.category}}</p>
+        <h6 class="left-align">Descrih6tion:</h6>
         <p class="left-align">{{product.description}}</p>
-        <p class="left-align">Price: {{price}}</p>
-        <p class="left-align">Stock: {{product.stock}}</p>
+        <h6 class="left-align">Price:</h6>
+        <p class="left-align">{{price}}</p>
+        <h6 class="left-align">Stock:</h6>
+        <p class="left-align">{{product.stock}}</p>
       </div>
     </div>
   </div>
@@ -50,10 +53,11 @@ export default {
     height: 200px;
     object-fit: cover;
   }
-  .card {
-  }
   #productTitle {
     font-weight: bolder;
     color: blue;
+  }
+  h6 {
+    font-weight: bold;
   }
 </style>
