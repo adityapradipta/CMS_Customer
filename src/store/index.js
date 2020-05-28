@@ -32,6 +32,9 @@ export default new Vuex.Store({
     },
     changeCurrentErr (state, payload) {
       state.currentErr = payload
+    },
+    setCurrentCustomer (state, payload) {
+      state.currentCustomer = payload
     }
   },
   actions: {
@@ -42,6 +45,19 @@ export default new Vuex.Store({
       })
         .then(response => {
           context.commit('setProductsList', response.data.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchCustomerDetail (context) {
+      const customerId = localStorage.currentUserId
+      server({
+        method: 'get',
+        url: `/customer/${customerId}`
+      })
+        .then(response => {
+          context.commit('setCurrentCustomer', response.data.data)
         })
         .catch(err => {
           console.log(err)

@@ -7,22 +7,22 @@
           <NotifSection></NotifSection>
           <ErrorSection></ErrorSection>
           <div class="input-field">
-            <input id="newName" v-model="editedCustomer.name" type="text" class="validate" required>
-            <label for="newName">Name</label>
+            <input id="newName" v-model="editedCustomer.name" type="text" class="validate" placeholder="Full Name" required>
+            <!-- <label for="newName">Name</label> -->
           </div>
           <div class="input-field">
-            <input id="newAddress" v-model="editedCustomer.address" type="text" class="validate" required>
-            <label for="newAddress">Address</label>
+            <input id="newAddress" v-model="editedCustomer.address" type="text" class="validate" placeholder="Address" required>
+            <!-- <label for="newAddress">Address</label> -->
           </div>
           <div class="input-field">
-            <input id="newPhone" v-model="editedCustomer.phone" type="number" class="validate" required>
-            <label for="newPhone">Phone</label>
+            <input id="newPhone" v-model="editedCustomer.phone" type="number" class="validate" placeholder="Phone" required>
+            <!-- <label for="newPhone">Phone</label> -->
           </div>
           <div class="input-field">
-            <input id="newEmail" v-model="editedCustomer.email" type="email" class="validate" readonly>
-            <label for="newEmail">Email</label>
+            <input id="newEmail" v-model="editedCustomer.email" type="email" readonly>
+            <!-- <label for="newEmail">Email</label> -->
           </div>
-          <button type="submit" class="btn blue darken-3" @click.prevent="">Save</button>
+          <button type="submit" class="btn blue darken-3" @click.prevent="editCustomerDetail">Save</button>
         </div>
       </div>
     </section>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-// import server from '../api/index'
+import server from '../api/index'
 import NotifSection from '../components/NotifSection'
 import ErrorSection from '../components/ErrorSection'
 
@@ -45,8 +45,7 @@ export default {
         name: '',
         address: '',
         email: '',
-        phone: '',
-        password: ''
+        phone: ''
       }
     }
   },
@@ -56,36 +55,41 @@ export default {
     }
   },
   methods: {
-    getCustomerDetail () {
-      // server({
-      //   method: 'post',
-      //   url: '/customer/register',
-      //   data: {
-      //     name: this.newCustomer.name,
-      //     address: this.newCustomer.address,
-      //     phone: this.newCustomer.phone,
-      //     email: this.newCustomer.email,
-      //     password: this.newCustomer.password
-      //   }
-      // })
-      //   .then(response => {
-      //     this.$store.commit('changeCurrentErr', '')
-      //     this.$store.commit('changeCurrentNotif', response.data.notif)
-      //     this.$router.push({ name: 'Login' })
-      //     this.newCustomer = {
-      //       name: '',
-      //       address: '',
-      //       email: '',
-      //       phone: '',
-      //       password: ''
-      //     }
-      //   })
-      //   .catch(err => {
-      //     this.$store.commit('changeCurrentNotif', '')
-      //     this.$store.commit('changeCurrentErr', err.response.data.err)
-      //     console.log(err.response.data.err)
-      //   })
+    fetchCustomerDetail () {
+      this.editedCustomer.name = this.currentCustomer.name
+      this.editedCustomer.address = this.currentCustomer.address
+      this.editedCustomer.email = this.currentCustomer.email
+      this.editedCustomer.phone = this.currentCustomer.phone
+    },
+    editCustomerDetail () {
+      const id = localStorage.currentUserId
+      server({
+        method: 'put',
+        url: `/customer/${id}`,
+        headers: {
+          token: localStorage.token
+        },
+        data: {
+          name: this.editedCustomer.name,
+          address: this.editedCustomer.address,
+          phone: this.editedCustomer.phone,
+          email: this.editedCustomer.email
+        }
+      })
+        .then(response => {
+          this.$store.dispatch('fetchCustomerDetail')
+          this.$store.commit('changeCurrentErr', '')
+          this.$store.commit('changeCurrentNotif', response.data.notif)
+          this.$router.push({ name: 'Customer' })
+        })
+        .catch(err => {
+          this.$store.commit('changeCurrentNotif', '')
+          this.$store.commit('changeCurrentErr', err.response.data.err)
+        })
     }
+  },
+  mounted () {
+    this.fetchCustomerDetail()
   }
 }
 </script>
