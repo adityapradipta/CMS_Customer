@@ -1,23 +1,38 @@
 <template>
   <div>
-    <section id="loginForm">
-      <div class="container">
-        <div class="col s12 m4">
-          <h4 class="center blue-text text-darken-2">Login</h4>
-          <NotifSection></NotifSection>
-          <ErrorSection></ErrorSection>
-          <div class="input-field">
+    <div id="loginForm" class="container">
+      <div class="col s12 m4">
+        <h4 class="center blue-text text-darken-2">Login</h4>
+        <NotifSection></NotifSection>
+        <ErrorSection></ErrorSection>
+        <div class="row">
+          <div class="input-field col s12 m6 push-m3">
             <input id="email" v-model="customer.email" type="email" class="validate" required>
             <label for="email">Email</label>
           </div>
-          <div class="input-field">
+        </div>
+        <div class="row center-align">
+          <div class="input-field col s12 m6 push-m3">
             <input id="password" v-model="customer.password" type="password" class="validate" required>
             <label for="password">Password</label>
           </div>
-          <button type="submit" class="btn blue darken-3" @click.prevent="loginCustomer">Login</button>
+        </div>
+        <div class="row">
+          <div class="col m3 push-m3">
+            <button type="submit" class="btn blue darken-3 z-depth-3" @click.prevent="loginCustomer">Login</button>
+          </div>
+          <div class="col m3 push-m3">
+            <router-link :to="'/'"><button class="btn red darken-1 z-depth-3">Cancel</button></router-link>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col m4 push-m4">
+            <p>New member?</p>
+            <router-link :to="'/register'"><button class="btn blue darken-3 z-depth-3">Register</button></router-link>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -71,6 +86,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  #loginForm {
+    padding-top: 100px;
+  }
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div>
     <Navbar></Navbar>
-    <div class="container">
+    <NotifSection></NotifSection>
+    <div id="dashboard" class="container">
       <div class="row">
         <ProductCard v-for="product in productsList" :key="product.id" :product="product"></ProductCard>
       </div>
@@ -11,12 +12,13 @@
 
 <script>
 import ProductCard from '../components/ProductCard'
+import NotifSection from '../components/NotifSection'
 import Navbar from '../components/Navbar'
 
 export default {
   name: 'Dashboard',
   components: {
-    ProductCard, Navbar
+    ProductCard, Navbar, NotifSection
   },
   computed: {
     productsList () {
@@ -33,6 +35,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

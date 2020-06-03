@@ -1,35 +1,46 @@
 <template>
-  <div>
-    <section id="registerForm">
-      <div class="container">
-        <div class="col s12 m4">
-          <h4 class="center blue-text text-darken-2">Register</h4>
-          <NotifSection></NotifSection>
-          <ErrorSection></ErrorSection>
-          <div class="input-field">
-            <input id="newName" v-model="newCustomer.name" type="text" class="validate" required>
-            <label for="newName">Name</label>
+  <div id="registerForm" class="container">
+    <div class="row">
+      <div class="col s12 m6 push-m3">
+        <h4 class="center blue-text text-darken-2">Register</h4>
+        <NotifSection></NotifSection>
+        <ErrorSection></ErrorSection>
+        <div class="input-field">
+          <input id="newName" v-model="newCustomer.name" type="text" class="validate" required>
+          <label for="newName">Name</label>
+        </div>
+        <div class="input-field">
+          <input id="newAddress" v-model="newCustomer.address" type="text" class="validate" required>
+          <label for="newAddress">Address</label>
+        </div>
+        <div class="input-field">
+          <input id="newPhone" v-model="newCustomer.phone" type="number" class="validate" required>
+          <label for="newPhone">Phone</label>
+        </div>
+        <div class="input-field">
+          <input id="newEmail" v-model="newCustomer.email" type="email" class="validate" required>
+          <label for="newEmail">Email</label>
+        </div>
+        <div class="input-field">
+          <input id="newPassword" v-model="newCustomer.password" type="password" class="validate" required>
+          <label for="newPassword">Password</label>
+        </div>
+        <div class="row">
+          <div class="col m3 push-m3">
+            <button type="submit" class="btn blue darken-3" @click.prevent="registerCustomer">Register</button>
           </div>
-          <div class="input-field">
-            <input id="newAddress" v-model="newCustomer.address" type="text" class="validate" required>
-            <label for="newAddress">Address</label>
+          <div class="col m3 push-m3">
+            <router-link :to="'/'"><button class="btn red darken-1 z-depth-3">Cancel</button></router-link>
           </div>
-          <div class="input-field">
-            <input id="newPhone" v-model="newCustomer.phone" type="number" class="validate" required>
-            <label for="newPhone">Phone</label>
+        </div>
+        <div class="row">
+          <div class="col m4 push-m4">
+            <p>Digi-Store member?</p>
+            <router-link :to="'/login'"><button class="btn blue darken-3 z-depth-3">Login</button></router-link>
           </div>
-          <div class="input-field">
-            <input id="newEmail" v-model="newCustomer.email" type="email" class="validate" required>
-            <label for="newEmail">Email</label>
-          </div>
-          <div class="input-field">
-            <input id="newPassword" v-model="newCustomer.password" type="password" class="validate" required>
-            <label for="newPassword">Password</label>
-          </div>
-          <button type="submit" class="btn blue darken-3" @click.prevent="registerCustomer">Register</button>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -82,7 +93,6 @@ export default {
         .catch(err => {
           this.$store.commit('changeCurrentNotif', '')
           this.$store.commit('changeCurrentErr', err.response.data.err)
-          console.log(err.response.data.err)
         })
     }
   },

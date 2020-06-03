@@ -1,17 +1,17 @@
 <template>
   <div class="col s12 m4">
-    <div class="card medium hoverable">
+    <div class="card z-depth-2 medium hoverable">
       <div class="card-image">
         <img :src="product.image_url" class="materialboxed">
       </div>
       <div class="card-content center">
         <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i></span>
-        <p id="productTitle" class="left-align">{{product.name}}</p>
+        <router-link :to="`/product/${product.id}`"><a id="productTitle">{{product.name}}</a></router-link>
         <p class="left-align">Price: {{price}}</p>
-        <p class="left-align">Stock: {{product.stock}}</p>
-        <div class="center">
-          <button class="btn btn-small" @click.prevent="addProductToCart(product.id)">Add to Cart</button>
-          <router-link :to="`/product/${product.id}`"><button class="btn btn-small">See Detail</button></router-link>
+        <p class="left-align" v-if="product.stock > 0">Stock: {{product.stock}}</p>
+        <p class="left-align" v-else>Stock: Empty</p>
+        <div class="addProductBtn" v-if="product.stock > 0">
+          <button class="btn btn-small" @click.prevent="addProductToCart(product.id)"><i class="material-icons left">add_shopping_cart</i>Add to Cart</button>
         </div>
       </div>
       <div class="card-reveal">
@@ -23,7 +23,8 @@
         <h6 class="left-align">Price:</h6>
         <p class="left-align">{{price}}</p>
         <h6 class="left-align">Stock:</h6>
-        <p class="left-align">{{product.stock}}</p>
+        <p class="left-align" v-if="product.stock === 0">Empty</p>
+        <p class="left-align" v-else>{{product.stock}}</p>
       </div>
     </div>
   </div>
@@ -76,6 +77,7 @@ export default {
             this.$store.dispatch('fetchCustomerCart')
             this.$store.commit('changeCurrentErr', '')
             this.$store.commit('changeCurrentNotif', response.data.notif)
+            this.$router.push({ name: 'Cart' })
           })
           .catch(err => {
             this.$store.commit('changeCurrentNotif', '')
@@ -99,6 +101,7 @@ export default {
             this.$store.dispatch('fetchCustomerCart')
             this.$store.commit('changeCurrentErr', '')
             this.$store.commit('changeCurrentNotif', response.data.notif)
+            this.$router.push({ name: 'Cart' })
           })
           .catch(err => {
             this.$store.commit('changeCurrentNotif', '')
@@ -123,8 +126,12 @@ export default {
   #productTitle {
     font-weight: bolder;
     color: blue;
+    font-size: 16px;
   }
   h6 {
     font-weight: bold;
+  }
+  .addProductBtn {
+    margin-top: 20px;
   }
 </style>

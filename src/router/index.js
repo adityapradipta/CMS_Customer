@@ -7,8 +7,12 @@ import Login from '../components/Login.vue'
 import Cart from '../components/Cart.vue'
 import Customer from '../components/Customer.vue'
 import CustomerEdit from '../components/CustomerEdit.vue'
-import OrderHistory from '../components/History.vue'
+import MyOrder from '../views/MyOrder.vue'
 import ProductDetail from '../components/ProductDetail.vue'
+import Home from '../components/Home.vue'
+import MyAccount from '../views/MyAccount.vue'
+import OrderHistory from '../components/OrderHistory.vue'
+import CurrentOrder from '../components/CurrentOrder.vue'
 
 Vue.use(VueRouter)
 
@@ -25,9 +29,14 @@ const routes = [
   },
   {
     path: '/customer',
-    name: 'Customer',
-    component: Customer,
+    name: 'MyAccount',
+    component: MyAccount,
     children: [
+      {
+        path: '',
+        name: 'Customer',
+        component: Customer
+      },
       {
         path: 'edit',
         name: 'CustomerEdit',
@@ -41,15 +50,31 @@ const routes = [
     component: Cart
   },
   {
-    path: '/history',
-    name: 'OrderHistory',
-    component: OrderHistory
+    path: '/my_order',
+    name: 'MyOrder',
+    component: MyOrder,
+    children: [
+      {
+        path: '',
+        name: 'CurrentOrder',
+        component: CurrentOrder
+      },
+      {
+        path: 'history',
+        name: 'OrderHistory',
+        component: OrderHistory
+      }
+    ]
   },
   {
     path: '/',
-    name: 'LandingPage',
     component: LandingPage,
     children: [
+      {
+        path: '',
+        name: 'Home',
+        component: Home
+      },
       {
         path: 'register',
         name: 'Register',

@@ -9,7 +9,7 @@
             <li><router-link to="/dashboard">Dashboard</router-link></li>
             <li><router-link to="/customer"><a>Your Account</a></router-link></li>
             <li><router-link to="/cart"><a>Cart</a></router-link></li>
-            <li><router-link to="/history"><a>History</a></router-link></li>
+            <li><router-link to="/my_order"><a>My Order</a></router-link></li>
             <li><a @click.prevent="logoutCustomer">Logout</a></li>
           </ul>
         </div>

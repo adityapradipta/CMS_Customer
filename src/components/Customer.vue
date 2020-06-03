@@ -1,28 +1,28 @@
 <template>
   <div>
-    <Navbar></Navbar>
-    <h3>Customer Detail</h3>
-    <h5>Name</h5>
-    <p>{{currentCustomer.name}}</p>
-    <h5>Address</h5>
-    <p>{{currentCustomer.address}}</p>
-    <h5>Email</h5>
-    <p>{{currentCustomer.email}}</p>
-    <h5>Phone</h5>
-    <p>{{currentCustomer.phone}}</p>
-    <router-link :to="'/customer/edit'"><button class="btn btn-small">Edit Data</button></router-link>
+    <div class="container">
+      <div class="row">
+        <div id="customerInfo" class="col s12 m6 push-m3 z-depth-4">
+          <h4>Customer Info</h4>
+          <h5 class="left-align">Name</h5>
+          <p class="left-align">{{currentCustomer.name}}</p>
+          <h5 class="left-align">Address</h5>
+          <p class="left-align">{{currentCustomer.address}}</p>
+          <h5 class="left-align">Email</h5>
+          <p class="left-align">{{currentCustomer.email}}</p>
+          <h5 class="left-align">Phone</h5>
+          <p class="left-align">{{currentCustomer.phone}}</p>
+          <router-link :to="'/customer/edit'"><button class="btn btn-small">Edit Data</button></router-link>
+        </div>
+      </div>
+    </div>
     <router-view/>
   </div>
 </template>
 
 <script>
-import Navbar from '../components/Navbar'
-
 export default {
   name: 'Customer',
-  components: {
-    Navbar
-  },
   computed: {
     currentCustomer () {
       return this.$store.state.currentCustomer
@@ -35,7 +35,13 @@ export default {
 </script>
 
 <style scoped>
-  h5 {
+  h5, h4 {
     font-weight: bolder;
+  }
+  image {
+    height: 200px;
+  }
+  #customerInfo {
+    padding: 20px;
   }
 </style>

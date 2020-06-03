@@ -5,18 +5,22 @@
       <div class="col s12 m8">
         <h4 class="center">{{product.name}}</h4>
         <div class="row">
-          <img :src="product.image_url" class="center materialboxed">
+          <div class="col s12 m6 push-m3 center">
+            <img :src="product.image_url" class="materialboxed">
+          </div>
         </div>
-        <div>
-          <h5 class="left-align">Description</h5>
-          <p class="left-align">{{ product.description }}</p>
-          <h5 class="left-align">Category</h5>
-          <p class="left-align">{{ product.category}}</p>
-          <h5 class="left-align">Price</h5>
-          <p class="left-align">{{ price }}</p>
-          <h5 class="left-align">Stock</h5>
-          <p class="left-align" v-if="product.stock == 0">Empty</p>
-          <p class="left-align" v-else>{{ product.stock }}</p>
+        <div class="row">
+          <div class="col s12 m10 push-m1 center">
+            <h5 class="left-align">Description</h5>
+            <p class="left-align">{{ product.description }}</p>
+            <h5 class="left-align">Category</h5>
+            <p class="left-align">{{ product.category}}</p>
+            <h5 class="left-align">Price</h5>
+            <p class="left-align">{{ price }}</p>
+            <h5 class="left-align">Stock</h5>
+            <p class="left-align" v-if="product.stock == 0">Empty</p>
+            <p class="left-align" v-else>{{ product.stock }}</p>
+          </div>
         </div>
         <router-link :to="'/dashboard'"><button class="btn"><i class="material-icons left">arrow_back</i>Back</button></router-link>
       </div>
