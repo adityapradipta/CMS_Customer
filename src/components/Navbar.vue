@@ -9,9 +9,8 @@
             <li><router-link to="/dashboard">Dashboard</router-link></li>
             <li><router-link to="/customer"><a>Your Account</a></router-link></li>
             <li><router-link to="/cart"><a>Cart</a></router-link></li>
-            <li><router-link to="/current_order"><a>Current Order</a></router-link></li>
             <li><router-link to="/history"><a>History</a></router-link></li>
-            <li><a @click.prevent="">Logout</a></li>
+            <li><a @click.prevent="logoutCustomer">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -28,8 +27,13 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 
 export default {
   name: 'Navbar',
+  methods: {
+    logoutCustomer () {
+      localStorage.clear()
+      this.$router.push({ name: 'LandingPage' })
+    }
+  },
   mounted () {
-    // sidebar
     const sidenav = document.querySelectorAll('.sidenav')
     M.Sidenav.init(sidenav)
   }

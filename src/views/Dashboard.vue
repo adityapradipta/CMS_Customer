@@ -1,7 +1,6 @@
 <template>
   <div>
     <Navbar></Navbar>
-    <h3>Dashboard</h3>
     <div class="container">
       <div class="row">
         <ProductCard v-for="product in productsList" :key="product.id" :product="product"></ProductCard>
@@ -25,7 +24,11 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('fetchProductsList')
+    if (!localStorage.token) {
+      this.$router.push({ name: 'Login' })
+    } else {
+      this.$store.dispatch('fetchProductsList')
+    }
   }
 }
 </script>

@@ -3,8 +3,11 @@
     <Navbar></Navbar>
     <NotifSection></NotifSection>
     <ErrorSection></ErrorSection>
-    <h3>Cart</h3>
-    <div v-if="currentCart.orders.length !== 0" class="container">
+    <div v-if="currentCart.length == 0">
+      <img src="https://image.flaticon.com/icons/svg/102/102661.svg">
+      <h5>Cart is empty. Please shop first!</h5>
+    </div>
+    <div v-else-if="currentCart.length !== 0" class="container">
       <table class="highlight">
         <thead>
           <tr class="center">
@@ -14,23 +17,36 @@
               <th>Quantity</th>
               <th>Price per Product</th>
               <th>Total Price</th>
+              <th>Action</th>
           </tr>
         </thead>
-        <tbody v-for="product in currentCart.orders" :key="product.id">
-          <tr>
+        <tbody>
+          <tr v-for="product in currentCart" :key="product.id">
             <td>{{ product.CartId }}</td>
             <td>{{ product.Product.name }}</td>
             <td>
               <img :src="product.Product.image_url">
             </td>
-            <td>{{ product.quantity }}</td>
+            <td>
+              <!-- <input type="number" :value="product.quantity"> -->
+              {{ product.quantity }}
+            </td>
             <td>{{ priceConverter(product.Product.price) }}</td>
             <td>{{ priceConverter(product.Product.price * product.quantity) }}</td>
-            <td>{{ product.status }}</td>
-            <td>{{ dateConverter(product.updatedAt) }}</td>
+            <td><button class="btn btn-small" @click.prevent="deleteProductFromCart(product.id)"><i class="material-icons">delete</i></button></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>TOTAL</td>
+            <td></td>
+            <td></td>
+            <td>{{ priceConverter(TotalPrice) }}</td>
+            <td></td>
           </tr>
         </tbody>
       </table>
+      <button class="btn btn-large" @click.prevent="checkoutAndPay">Checkout and Pay</button>
     </div>
   </div>
 </template>
@@ -47,28 +63,43 @@ export default {
     Navbar, NotifSection, ErrorSection
   },
   computed: {
+    customerCart () {
+      return this.$store.state.customerCart
+    },
     currentCart () {
-      return this.$store.state.currentCart
+      var detail = []
+      const CartId = +localStorage.CartId
+      for (let i = 0; i < this.customerCart.length; i++) {
+        if (this.customerCart[i].CartId === CartId && this.customerCart[i].status === 'Created') {
+          detail.push(this.customerCart[i])
+        }
+      }
+      return detail
+    },
+    TotalPrice () {
+      let totalPrice = 0
+      for (let i = 0; i < this.currentCart.length; i++) {
+        totalPrice += this.currentCart[i].quantity * this.currentCart[i].Product.price
+      }
+      return totalPrice
     }
   },
   methods: {
     priceConverter (number) {
       return new Intl.NumberFormat('in-IN', { style: 'currency', currency: 'IDR' }).format(number)
     },
-    createCart () {
-      const customerId = localStorage.currentUserId
+    deleteProductFromCart (CartProductId) {
+      const CartId = localStorage.CartId
+      const token = localStorage.token
       server({
-        method: 'post',
-        url: `/customer/${customerId}/cart`,
+        method: 'delete',
+        url: `/customer/${CartId}/${CartProductId}`,
         headers: {
-          token: localStorage.token
-        },
-        data: {
-          CustomerId: customerId
+          token
         }
       })
         .then(response => {
-          this.$store.commit('setCurrentCartId', response.data.data.id)
+          this.$store.dispatch('fetchCustomerCart')
           this.$store.commit('changeCurrentErr', '')
           this.$store.commit('changeCurrentNotif', response.data.notif)
         })
@@ -77,51 +108,40 @@ export default {
           this.$store.commit('changeCurrentErr', err.response.data.err)
         })
     },
-    addProductToCart (payload) {
-      const customerId = localStorage.currentUserId
-      const { id } = this.currentCart
-      const { quantity, ProductId } = payload
+    checkoutAndPay () {
+      const CartId = localStorage.CartId
+      const token = localStorage.token
       server({
-        method: 'post',
-        url: `/customer/${customerId}/${id}`,
+        method: 'patch',
+        url: `/customer/${CartId}`,
         headers: {
-          token: localStorage.token
+          token
         },
         data: {
-          quantity,
-          status: 'Paid',
-          CartId: id,
-          ProductId
+          status: 'Paid'
         }
       })
         .then(response => {
+          console.log(response.data.data)
+          localStorage.removeItem('CartId')
+          this.$store.dispatch('fetchCustomerCart')
           this.$store.commit('changeCurrentErr', '')
-          this.$store.commit('changeCurrentNotif', response.data.notif)
+          this.$store.commit('changeCurrentNotif', 'Order success!')
         })
         .catch(err => {
           this.$store.commit('changeCurrentNotif', '')
           this.$store.commit('changeCurrentErr', err.response.data.err)
-        })
-    },
-    saveAndPay () {
-      this.createCart()
-        .then(() => {
-          for (let i = 0; i < this.currentCart.orders.length; i++) {
-            this.addProductToCart(this.currentCart.orders[i])
-          }
-        })
-        .then(() => {
-          this.$store.commit('changeCurrentErr', '')
-          this.$store.commit('changeCurrentNotif', 'Order(s) successfully paid')
-        })
-        .catch(err => {
-          console.log(err)
         })
     }
+  },
+  created () {
+    this.$store.dispatch('fetchCustomerCart')
   }
 }
 </script>
 
-<style>
-
+<style scoped>
+  img {
+    height: 100px;
+  }
 </style>

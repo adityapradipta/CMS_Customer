@@ -39,13 +39,22 @@ export default new Vuex.Store({
     },
     setCustomerCart (state, payload) {
       state.customerCart = payload
+    },
+    setCurrentCartId (state, payload) {
+      state.currentCart.id = payload
+    },
+    addOrderToCart (state, payload) {
+      state.currentCart.orders.push(payload)
     }
   },
   actions: {
     fetchProductsList (context) {
       server({
         method: 'get',
-        url: '/product'
+        url: '/product',
+        headers: {
+          token: localStorage.token
+        }
       })
         .then(response => {
           context.commit('setProductsList', response.data.data)
@@ -55,10 +64,12 @@ export default new Vuex.Store({
         })
     },
     fetchCustomerDetail (context) {
-      const customerId = localStorage.currentUserId
       server({
         method: 'get',
-        url: `/customer/${customerId}`
+        url: '/customer',
+        headers: {
+          token: localStorage.token
+        }
       })
         .then(response => {
           context.commit('setCurrentCustomer', response.data.data)
@@ -68,13 +79,14 @@ export default new Vuex.Store({
         })
     },
     fetchCustomerCart (context) {
-      const customerId = localStorage.currentUserId
       server({
         method: 'get',
-        url: `/customer/${customerId}/cart`
+        url: `/customer/cart`,
+        headers: {
+          token: localStorage.token
+        }
       })
         .then(response => {
-          // console.log(response.data.data)
           context.commit('setCustomerCart', response.data.data)
         })
         .catch(err => {

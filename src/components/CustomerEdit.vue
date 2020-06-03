@@ -62,10 +62,9 @@ export default {
       this.editedCustomer.phone = this.currentCustomer.phone
     },
     editCustomerDetail () {
-      const id = localStorage.currentUserId
       server({
         method: 'put',
-        url: `/customer/${id}`,
+        url: '/customer',
         headers: {
           token: localStorage.token
         },
