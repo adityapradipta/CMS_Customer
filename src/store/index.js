@@ -11,10 +11,7 @@ export default new Vuex.Store({
     currentNotif: '',
     currentErr: '',
     currentCustomer: '',
-    currentCart: {
-      id: '',
-      orders: []
-    },
+    currentCart: [],
     customerCart: []
   },
   mutations: {
@@ -40,11 +37,15 @@ export default new Vuex.Store({
     setCustomerCart (state, payload) {
       state.customerCart = payload
     },
-    setCurrentCartId (state, payload) {
-      state.currentCart.id = payload
-    },
-    addOrderToCart (state, payload) {
-      state.currentCart.orders.push(payload)
+    setCurrentCart (state) {
+      var detail = []
+      const CartId = +localStorage.CartId
+      for (let i = 0; i < state.customerCart.length; i++) {
+        if (state.customerCart[i].CartId === CartId && state.customerCart[i].status === 'Created') {
+          detail.push(state.customerCart[i])
+        }
+      }
+      state.currentCart = detail
     }
   },
   actions: {
@@ -81,13 +82,14 @@ export default new Vuex.Store({
     fetchCustomerCart (context) {
       server({
         method: 'get',
-        url: `/customer/cart`,
+        url: '/customer/cart',
         headers: {
           token: localStorage.token
         }
       })
         .then(response => {
           context.commit('setCustomerCart', response.data.data)
+          context.commit('setCurrentCart')
         })
         .catch(err => {
           console.log(err)

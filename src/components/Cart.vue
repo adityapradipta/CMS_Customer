@@ -12,27 +12,37 @@
       <router-link :to="'/dashboard'"><button class="btn btn-large white grey-text text-darken-3 z-depth-3">SHOP MORE!</button></router-link>
       <table class="highlight">
         <thead>
-          <tr class="center">
-              <th>Product Name</th>
-              <th>Product Img</th>
-              <th>Quantity</th>
-              <th>Price per Product</th>
-              <th>Total Price</th>
-              <th>Action</th>
+          <tr>
+              <th class="center-align">Product Name</th>
+              <th class="center-align">Product Img</th>
+              <th class="center-align">Quantity</th>
+              <th class="center-align">Price per Product</th>
+              <th class="center-align">Total Price</th>
+              <th class="center-align">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="product in currentCart" :key="product.id">
-            <td>{{ product.Product.name }}</td>
-            <td>
+            <td class="center-align">{{ product.Product.name }}</td>
+            <td class="center">
               <img :src="product.Product.image_url">
             </td>
-            <td>
-              {{ product.quantity }}
+            <td class="center">
+              <div class="row">
+                <div class="col m4">
+                  <button v-if="product.quantity > 1" class="btn btn-small" @click.prevent="changeQuantity(product,-1)"><i class="material-icons">remove</i></button>
+                </div>
+                <div class="col m4">
+                  <h6>{{ product.quantity }}</h6>
+                </div>
+                <div class="col m4">
+                  <button class="btn btn-small" @click.prevent="changeQuantity(product,+1)"><i class="material-icons">add</i></button>
+                </div>
+              </div>
             </td>
-            <td>{{ priceConverter(product.Product.price) }}</td>
-            <td>{{ priceConverter(product.Product.price * product.quantity) }}</td>
-            <td><button class="btn btn-small" @click.prevent="deleteProductFromCart(product.id)"><i class="material-icons">delete</i></button></td>
+            <td class="center-align">{{ priceConverter(product.Product.price) }}</td>
+            <td class="center-align">{{ priceConverter(product.Product.price * product.quantity) }}</td>
+            <td class="center"><button class="btn btn-small" @click.prevent="deleteProductFromCart(product.id)"><i class="material-icons">delete</i></button></td>
           </tr>
           <tr>
             <td></td>
@@ -61,18 +71,8 @@ export default {
     Navbar, NotifSection, ErrorSection
   },
   computed: {
-    customerCart () {
-      return this.$store.state.customerCart
-    },
     currentCart () {
-      var detail = []
-      const CartId = +localStorage.CartId
-      for (let i = 0; i < this.customerCart.length; i++) {
-        if (this.customerCart[i].CartId === CartId && this.customerCart[i].status === 'Created') {
-          detail.push(this.customerCart[i])
-        }
-      }
-      return detail
+      return this.$store.state.currentCart
     },
     TotalPrice () {
       let totalPrice = 0
@@ -94,6 +94,31 @@ export default {
         url: `/customer/${CartId}/${CartProductId}`,
         headers: {
           token
+        }
+      })
+        .then(response => {
+          this.$store.dispatch('fetchCustomerCart')
+          this.$store.commit('changeCurrentErr', '')
+          this.$store.commit('changeCurrentNotif', response.data.notif)
+        })
+        .catch(err => {
+          this.$store.commit('changeCurrentNotif', '')
+          this.$store.commit('changeCurrentErr', err.response.data.err)
+        })
+    },
+    changeQuantity (cartProduct, sum) {
+      const token = localStorage.token
+      server({
+        method: 'put',
+        url: `/customer/${cartProduct.CartId}`,
+        headers: {
+          token
+        },
+        data: {
+          id: cartProduct.id,
+          ProductId: cartProduct.ProductId,
+          quantity: Number(cartProduct.quantity) + sum,
+          status: 'Created'
         }
       })
         .then(response => {

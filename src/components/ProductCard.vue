@@ -42,6 +42,11 @@ export default {
       price: new Intl.NumberFormat('in-IN', { style: 'currency', currency: 'IDR' }).format(this.product.price)
     }
   },
+  computed: {
+    currentCart () {
+      return this.$store.state.currentCart
+    }
+  },
   methods: {
     addProductToCart (ProductId) {
       const token = localStorage.token
@@ -84,31 +89,69 @@ export default {
             this.$store.commit('changeCurrentErr', err.response.data.err)
           })
       } else {
-        const CartId = localStorage.CartId
-        server({
-          method: 'post',
-          url: `/customer/${CartId}`,
-          headers: {
-            token
-          },
-          data: {
-            quantity: 1,
-            status: 'Created',
-            ProductId
+        const CartId = +localStorage.CartId
+        var isAdded = false
+        var addedCart = ''
+        for (let i = 0; i < this.currentCart.length; i++) {
+          if (this.currentCart[i].ProductId === ProductId) {
+            isAdded = true
+            addedCart = this.currentCart[i]
+            break
           }
-        })
-          .then(response => {
-            this.$store.dispatch('fetchCustomerCart')
-            this.$store.commit('changeCurrentErr', '')
-            this.$store.commit('changeCurrentNotif', response.data.notif)
-            this.$router.push({ name: 'Cart' })
+        }
+        if (isAdded) {
+          server({
+            method: 'put',
+            url: `/customer/${CartId}`,
+            headers: {
+              token
+            },
+            data: {
+              id: addedCart.id,
+              ProductId: addedCart.ProductId,
+              quantity: Number(addedCart.quantity) + 1,
+              status: 'Created'
+            }
           })
-          .catch(err => {
-            this.$store.commit('changeCurrentNotif', '')
-            this.$store.commit('changeCurrentErr', err.response.data.err)
+            .then(response => {
+              this.$store.dispatch('fetchCustomerCart')
+              this.$store.commit('changeCurrentErr', '')
+              this.$store.commit('changeCurrentNotif', response.data.notif)
+              this.$router.push({ name: 'Cart' })
+            })
+            .catch(err => {
+              this.$store.commit('changeCurrentNotif', '')
+              this.$store.commit('changeCurrentErr', err.response.data.err)
+            })
+        } else {
+          server({
+            method: 'post',
+            url: `/customer/${CartId}`,
+            headers: {
+              token
+            },
+            data: {
+              quantity: 1,
+              status: 'Created',
+              ProductId
+            }
           })
+            .then(response => {
+              this.$store.dispatch('fetchCustomerCart')
+              this.$store.commit('changeCurrentErr', '')
+              this.$store.commit('changeCurrentNotif', response.data.notif)
+              this.$router.push({ name: 'Cart' })
+            })
+            .catch(err => {
+              this.$store.commit('changeCurrentNotif', '')
+              this.$store.commit('changeCurrentErr', err.response.data.err)
+            })
+        }
       }
     }
+  },
+  created () {
+    this.$store.dispatch('fetchCustomerCart')
   },
   mounted () {
     const materialbox = document.querySelectorAll('.materialboxed')
