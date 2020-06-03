@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  name: 'LandingPage'
+  name: 'LandingPage',
+  created () {
+    if (localStorage.token) {
+      this.$router.push({ name: 'Dashboard' })
+    }
+  }
 }
 </script>
 

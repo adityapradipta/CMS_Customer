@@ -96,6 +96,13 @@ export default {
         })
     }
   },
+  created () {
+    if (!localStorage.token) {
+      this.$router.push({ name: 'Login' })
+    } else {
+      this.$store.dispatch('fetchProductsList')
+    }
+  },
   mounted () {
     this.fetchCustomerDetail()
   }

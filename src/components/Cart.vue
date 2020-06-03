@@ -64,6 +64,7 @@ import Navbar from '../components/Navbar'
 import server from '../api/index'
 import NotifSection from '../components/NotifSection'
 import ErrorSection from '../components/ErrorSection'
+import priceConverter from '../helpers/priceConverter'
 
 export default {
   name: 'Cart',
@@ -83,9 +84,7 @@ export default {
     }
   },
   methods: {
-    priceConverter (number) {
-      return new Intl.NumberFormat('in-IN', { style: 'currency', currency: 'IDR' }).format(number)
-    },
+    priceConverter: priceConverter,
     deleteProductFromCart (CartProductId) {
       const CartId = localStorage.CartId
       const token = localStorage.token
@@ -180,7 +179,12 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('fetchCustomerCart')
+    if (!localStorage.token) {
+      this.$router.push({ name: 'Login' })
+    } else {
+      this.$store.dispatch('fetchProductsList')
+      this.$store.dispatch('fetchCustomerCart')
+    }
   }
 }
 </script>

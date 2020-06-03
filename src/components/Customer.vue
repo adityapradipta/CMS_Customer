@@ -29,7 +29,12 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('fetchCustomerDetail')
+    if (!localStorage.token) {
+      this.$router.push({ name: 'Login' })
+    } else {
+      this.$store.dispatch('fetchProductsList')
+      this.$store.dispatch('fetchCustomerDetail')
+    }
   }
 }
 </script>

@@ -33,6 +33,9 @@
 </template>
 
 <script>
+import priceConverter from '../helpers/priceConverter'
+import dateConverter from '../helpers/dateConverter'
+
 export default {
   name: 'OrderHistory',
   computed: {
@@ -50,19 +53,16 @@ export default {
     }
   },
   methods: {
-    priceConverter (number) {
-      return new Intl.NumberFormat('in-IN', { style: 'currency', currency: 'IDR' }).format(number)
-    },
-    dateConverter (newDate) {
-      const fullDate = new Date(newDate)
-      const date = fullDate.getDate()
-      const month = fullDate.getMonth() + 1
-      const year = fullDate.getFullYear()
-      return `${date} - ${month} - ${year}`
-    }
+    priceConverter: priceConverter,
+    dateConverter: dateConverter
   },
   created () {
-    this.$store.dispatch('fetchCustomerCart')
+    if (!localStorage.token) {
+      this.$router.push({ name: 'Login' })
+    } else {
+      this.$store.dispatch('fetchProductsList')
+      this.$store.dispatch('fetchCustomerCart')
+    }
   }
 }
 </script>

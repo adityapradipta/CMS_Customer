@@ -7,7 +7,7 @@
           <div class="caption center-align">
             <h3>Welcome to Digi-Store</h3>
             <h5 class="light grey-text text-lighten-3">The best shopping hall for your gadget</h5>
-            <div class="row">
+            <div class="row" id="loginRegisterSign">
               <div class="col s12 m6">
                 <router-link :to="'/login'"><a class="white-text">Login</a></router-link>
               </div>
@@ -71,11 +71,11 @@
     <div class="container">
       <div class="row">
         <div class="col s12 m3 push-m2">
-          <h4>For Digi-Store Member</h4>
+          <p>For Digi-Store Member</p>
           <router-link :to="'/login'"><button class="btn btn-large z-depth-4">Login</button></router-link>
         </div>
         <div class="col s12 m3 push-m4">
-          <h4>For New Member</h4>
+          <p>For New Member</p>
           <router-link :to="'/register'"><button class="btn btn-large z-depth-4">Register</button></router-link>
         </div>
       </div>
@@ -94,14 +94,12 @@ export default {
   },
   methods: {
   },
-  created () {
-  },
   mounted () {
     const slider = document.querySelectorAll('#slider')
     M.Slider.init(slider, {
       indicators: false,
       height: 625,
-      interval: 3000
+      interval: 5000
     })
   }
 }
@@ -110,14 +108,18 @@ export default {
 <style scoped>
   img {
     object-fit: cover;
-    /* max-width: 100%;
-    height: auto; */
   }
   a {
-    font-size: 30px;
+    font-size: 50px;
+  }
+  p {
+    font-size: 20px;
   }
   h3 {
     font-weight: bolder;
     text-shadow: 2px 2px 5px grey
+  }
+  #loginRegisterSign {
+    padding-top: 50px;
   }
 </style>

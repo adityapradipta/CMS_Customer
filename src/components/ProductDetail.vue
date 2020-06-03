@@ -16,7 +16,7 @@
             <h5 class="left-align">Category</h5>
             <p class="left-align">{{ product.category}}</p>
             <h5 class="left-align">Price</h5>
-            <p class="left-align">{{ price }}</p>
+            <p class="left-align">{{ priceConverter(product.price) }}</p>
             <h5 class="left-align">Stock</h5>
             <p class="left-align" v-if="product.stock == 0">Empty</p>
             <p class="left-align" v-else>{{ product.stock }}</p>
@@ -33,6 +33,7 @@
 import server from '../api/index'
 import Navbar from '../components/Navbar'
 import M from 'materialize-css/dist/js/materialize.min.js'
+import priceConverter from '../helpers/priceConverter'
 
 export default {
   name: 'ProductDetail',
@@ -41,15 +42,11 @@ export default {
       product: ''
     }
   },
-  computed: {
-    price () {
-      return new Intl.NumberFormat('in-IN', { style: 'currency', currency: 'IDR' }).format(this.product.price)
-    }
-  },
   components: {
     Navbar
   },
   methods: {
+    priceConverter: priceConverter,
     getProductById () {
       server({
         method: 'get',
@@ -64,7 +61,12 @@ export default {
     }
   },
   created () {
-    this.getProductById()
+    if (!localStorage.token) {
+      this.$router.push({ name: 'Login' })
+    } else {
+      this.$store.dispatch('fetchProductsList')
+      this.getProductById()
+    }
   },
   mounted () {
     const materialbox = document.querySelectorAll('.materialboxed')

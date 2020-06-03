@@ -14,6 +14,11 @@ export default {
   name: 'MyAccount',
   components: {
     Navbar, NotifSection
+  },
+  created () {
+    if (!localStorage.token) {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>

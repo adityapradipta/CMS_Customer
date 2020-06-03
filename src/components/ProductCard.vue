@@ -7,7 +7,7 @@
       <div class="card-content center">
         <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i></span>
         <router-link :to="`/product/${product.id}`"><a id="productTitle">{{product.name}}</a></router-link>
-        <p class="left-align">Price: {{price}}</p>
+        <p class="left-align">Price: {{priceConverter(product.price)}}</p>
         <p class="left-align" v-if="product.stock > 0">Stock: {{product.stock}}</p>
         <p class="left-align" v-else>Stock: Empty</p>
         <div class="addProductBtn" v-if="product.stock > 0">
@@ -21,7 +21,7 @@
         <h6 class="left-align">Description:</h6>
         <p class="left-align">{{product.description}}</p>
         <h6 class="left-align">Price:</h6>
-        <p class="left-align">{{price}}</p>
+        <p class="left-align">{{priceConverter(product.price)}}</p>
         <h6 class="left-align">Stock:</h6>
         <p class="left-align" v-if="product.stock === 0">Empty</p>
         <p class="left-align" v-else>{{product.stock}}</p>
@@ -33,21 +33,18 @@
 <script>
 import M from 'materialize-css/dist/js/materialize.min.js'
 import server from '../api/index'
+import priceConverter from '../helpers/priceConverter'
 
 export default {
   name: 'ProductCard',
   props: ['product'],
-  data () {
-    return {
-      price: new Intl.NumberFormat('in-IN', { style: 'currency', currency: 'IDR' }).format(this.product.price)
-    }
-  },
   computed: {
     currentCart () {
       return this.$store.state.currentCart
     }
   },
   methods: {
+    priceConverter: priceConverter,
     addProductToCart (ProductId) {
       const token = localStorage.token
       const CustomerId = localStorage.currentUserId

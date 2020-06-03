@@ -6,4 +6,4 @@ function dateConverter (newDate) {
   return `${date} - ${month} - ${year}`
 }
 
-return dateConverter
+module.exports = dateConverter

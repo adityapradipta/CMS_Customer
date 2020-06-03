@@ -82,6 +82,9 @@ export default {
     }
   },
   created () {
+    if (localStorage.token) {
+      this.$router.push({ name: 'Dashboard' })
+    }
   }
 }
 </script>

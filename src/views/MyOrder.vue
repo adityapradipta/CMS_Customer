@@ -20,6 +20,11 @@ export default {
   name: 'MyOrder',
   components: {
     Navbar
+  },
+  created () {
+    if (!localStorage.token) {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>
