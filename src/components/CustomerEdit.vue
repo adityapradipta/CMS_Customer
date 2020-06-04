@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Edit Info</h3>
+    <h3>Edit Data</h3>
     <section id="customerEditForm">
       <div class="container">
         <div class="col s12 m4">
@@ -8,26 +8,22 @@
           <div class="input-field">
             <p class="left-align">Name</p>
             <input id="newName" v-model="editedCustomer.name" type="text" class="validate" placeholder="Full Name" required>
-            <!-- <label for="newName">Name</label> -->
           </div>
           <div class="input-field">
             <p class="left-align">Address</p>
             <input id="newAddress" v-model="editedCustomer.address" type="text" class="validate" placeholder="Address" required>
-            <!-- <label for="newAddress">Address</label> -->
           </div>
           <div class="input-field">
             <p class="left-align">Phone</p>
             <input id="newPhone" v-model="editedCustomer.phone" type="number" class="validate" placeholder="Phone" required>
-            <!-- <label for="newPhone">Phone</label> -->
           </div>
           <div class="input-field">
             <p class="left-align">Email</p>
             <input id="newEmail" v-model="editedCustomer.email" type="email" readonly>
-            <!-- <label for="newEmail">Email</label> -->
           </div>
           <div class="row">
             <div class="col s12 m3 push-m3">
-              <button type="submit" class="btn blue darken-3 z-depth-3" @click.prevent="editCustomerDetail">Save</button>
+              <button type="submit" class="btn grey darken-3 z-depth-3" @click.prevent="editCustomerDetail">Save</button>
             </div>
             <div class="col s12 m3 push-m2">
               <router-link :to="'/customer'"><button class="btn red darken-1 z-depth-3">Cancel</button></router-link>

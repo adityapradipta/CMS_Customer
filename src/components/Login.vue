@@ -2,7 +2,7 @@
   <div>
     <div id="loginForm" class="container">
       <div class="col s12 m4">
-        <h4 class="center blue-text text-darken-2">Login</h4>
+        <h4 class="center grey-text text-darken-4">Welcome to Digi-Store</h4>
         <NotifSection></NotifSection>
         <ErrorSection></ErrorSection>
         <div class="row">
@@ -19,7 +19,7 @@
         </div>
         <div class="row">
           <div class="col m3 push-m3">
-            <button type="submit" class="btn blue darken-3 z-depth-3" @click.prevent="loginCustomer">Login</button>
+            <button type="submit" class="btn grey darken-4 z-depth-3" @click.prevent="loginCustomer">Login</button>
           </div>
           <div class="col m3 push-m3">
             <router-link :to="'/'"><button class="btn red darken-1 z-depth-3">Cancel</button></router-link>
@@ -28,7 +28,7 @@
         <div class="row">
           <div class="col m4 push-m4">
             <p>New member?</p>
-            <router-link :to="'/register'"><button class="btn blue darken-3 z-depth-3">Register</button></router-link>
+            <router-link :to="'/register'"><button class="btn btn-small grey darken-4 z-depth-3">Register</button></router-link>
           </div>
         </div>
       </div>

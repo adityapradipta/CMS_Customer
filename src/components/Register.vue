@@ -2,7 +2,8 @@
   <div id="registerForm" class="container">
     <div class="row">
       <div class="col s12 m6 push-m3">
-        <h4 class="center blue-text text-darken-2">Register</h4>
+        <h4 class="center grey-text text-darken-4">Welcome to Digi-Store</h4>
+        <h6 class="center grey-text text-darken-4">Please register first</h6>
         <NotifSection></NotifSection>
         <ErrorSection></ErrorSection>
         <div class="input-field">
@@ -27,7 +28,7 @@
         </div>
         <div class="row">
           <div class="col m3 push-m3">
-            <button type="submit" class="btn blue darken-3" @click.prevent="registerCustomer">Register</button>
+            <button type="submit" class="btn grey darken-4 z-depth-3" @click.prevent="registerCustomer">Register</button>
           </div>
           <div class="col m3 push-m3">
             <router-link :to="'/'"><button class="btn red darken-1 z-depth-3">Cancel</button></router-link>
@@ -36,7 +37,7 @@
         <div class="row">
           <div class="col m4 push-m4">
             <p>Digi-Store member?</p>
-            <router-link :to="'/login'"><button class="btn blue darken-3 z-depth-3">Login</button></router-link>
+            <router-link :to="'/login'"><button class="btn btn-small grey darken-4 z-depth-3">Login</button></router-link>
           </div>
         </div>
       </div>

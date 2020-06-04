@@ -12,6 +12,7 @@
               <th class="center-align">Total Price</th>
               <th class="center-align">Status</th>
               <th class="center-align">Finished Date</th>
+              <th class="center-align">Invoice</th>
           </tr>
         </thead>
         <tbody v-for="product in finishedOrder" :key="product.id">
@@ -25,6 +26,9 @@
             <td class="center-align">{{ priceConverter(product.Product.price * product.quantity) }}</td>
             <td class="boldStatus center-align">{{ product.status.toUpperCase() }}</td>
             <td class="center-align">{{ dateConverter(product.updatedAt) }}</td>
+            <td class="center-align">
+              <router-link :to="`/my_order/${product.id}`">Invoice</router-link>
+            </td>
           </tr>
         </tbody>
       </table>

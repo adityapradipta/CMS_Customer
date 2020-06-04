@@ -13,6 +13,7 @@ import Home from '../components/Home.vue'
 import MyAccount from '../views/MyAccount.vue'
 import OrderHistory from '../components/OrderHistory.vue'
 import CurrentOrder from '../components/CurrentOrder.vue'
+import Invoice from '../components/Invoice.vue'
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,11 @@ const routes = [
         path: 'history',
         name: 'OrderHistory',
         component: OrderHistory
+      },
+      {
+        path: ':id',
+        name: 'Invoice',
+        component: Invoice
       }
     ]
   },

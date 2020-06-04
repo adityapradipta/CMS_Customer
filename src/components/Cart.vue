@@ -9,7 +9,7 @@
       <router-link :to="'/dashboard'"><button class="btn btn-large white grey-text text-darken-3 z-depth-3">START SHOPPING!</button></router-link>
     </div>
     <div v-else-if="currentCart.length !== 0" class="container">
-      <router-link :to="'/dashboard'"><button class="btn btn-large white grey-text text-darken-3 z-depth-3">SHOP MORE!</button></router-link>
+      <router-link :to="'/dashboard'"><button id="shopmoreBtn" class="boldText btn btn-large red white-text z-depth-2">SHOP MORE!</button></router-link>
       <table class="highlight">
         <thead>
           <tr>
@@ -47,14 +47,14 @@
           <tr>
             <td></td>
             <td></td>
-            <td>TOTAL PRICE</td>
+            <td class="boldText center-align">TOTAL PRICE</td>
             <td></td>
-            <td>{{ priceConverter(TotalPrice) }}</td>
+            <td class="boldText center-align green-text text-darken-2">{{ priceConverter(TotalPrice) }}</td>
             <td></td>
           </tr>
         </tbody>
       </table>
-      <button class="btn btn-large" @click.prevent="checkoutAndPay"><i class="material-icons right">payment</i>Checkout and Pay</button>
+      <button class="checkoutBtn btn btn-large z-depth-4" @click.prevent="checkoutAndPay"><i class="material-icons right">payment</i>Checkout and Pay</button>
     </div>
   </div>
 </template>
@@ -192,5 +192,12 @@ export default {
 <style scoped>
   img {
     height: 100px;
+  }
+  .checkoutBtn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .boldText {
+    font-weight: bolder;
   }
 </style>

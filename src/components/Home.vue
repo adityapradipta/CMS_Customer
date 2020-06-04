@@ -72,11 +72,11 @@
       <div class="row">
         <div class="col s12 m3 push-m2">
           <p>For Digi-Store Member</p>
-          <router-link :to="'/login'"><button class="btn btn-large z-depth-4">Login</button></router-link>
+          <router-link :to="'/login'"><button class="btn btn-large grey darken-4 z-depth-4">Login</button></router-link>
         </div>
         <div class="col s12 m3 push-m4">
           <p>For New Member</p>
-          <router-link :to="'/register'"><button class="btn btn-large z-depth-4">Register</button></router-link>
+          <router-link :to="'/register'"><button class="btn btn-large grey darken-4 z-depth-4">Register</button></router-link>
         </div>
       </div>
     </div>

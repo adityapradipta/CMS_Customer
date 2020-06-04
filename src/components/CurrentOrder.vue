@@ -1,10 +1,10 @@
 <template>
   <div>
     <div v-if="onGoingOrder.length !== 0" class="container">
-      <h4>Current Order</h4>
+      <h4 class="blue-text text-darken-3">Current Order</h4>
       <table class="highlight">
         <thead>
-          <tr>
+          <tr class="largeText">
               <th class="center-align">Product Name</th>
               <th class="center-align">Image</th>
               <th class="center-align">Quantity</th>
@@ -12,6 +12,7 @@
               <th class="center-align">Order Date</th>
               <th class="center-align">Status</th>
               <th class="center-align">Date Updated</th>
+              <th class="center-align">Invoice</th>
           </tr>
         </thead>
         <tbody v-for="product in onGoingOrder" :key="product.id">
@@ -25,6 +26,9 @@
             <td class="center-align">{{ dateConverter(product.createdAt) }}</td>
             <td class="boldStatus center-align">{{ product.status.toUpperCase() }}</td>
             <td class="center-align">{{ dateConverter(product.updatedAt) }}</td>
+            <td class="center-align">
+              <router-link :to="`/my_order/${product.id}`">Invoice</router-link>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -75,4 +79,7 @@ export default {
     font-weight: bold;
     color: green;
   }
+  /* .largeText {
+    font-size: 16px;
+  } */
 </style>

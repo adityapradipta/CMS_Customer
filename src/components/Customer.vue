@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div id="customerInfo" class="col s12 m6 push-m3 z-depth-4">
-          <h4>Customer Info</h4>
+          <h4 class="blue-text text-darken-3">Customer Info</h4>
           <h5 class="left-align">Name</h5>
           <p class="left-align">{{currentCustomer.name}}</p>
           <h5 class="left-align">Address</h5>
@@ -12,7 +12,7 @@
           <p class="left-align">{{currentCustomer.email}}</p>
           <h5 class="left-align">Phone</h5>
           <p class="left-align">{{currentCustomer.phone}}</p>
-          <router-link :to="'/customer/edit'"><button class="btn btn-small">Edit Data</button></router-link>
+          <router-link :to="'/customer/edit'"><button class="btn btn-small grey darken-3 z-depth-2">Edit Data</button></router-link>
         </div>
       </div>
     </div>

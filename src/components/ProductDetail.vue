@@ -22,7 +22,7 @@
             <p class="left-align" v-else>{{ product.stock }}</p>
           </div>
         </div>
-        <router-link :to="'/dashboard'"><button class="btn"><i class="material-icons left">arrow_back</i>Back</button></router-link>
+        <router-link :to="'/dashboard'"><button class="btn grey darken-3 z-depth-3"><i class="material-icons left">arrow_back</i>Back</button></router-link>
       </div>
     </div>
   </div>
@@ -88,5 +88,8 @@ export default {
   }
   h4, h5 {
     font-weight: bolder;
+  }
+  .container {
+    padding-bottom: 20px;
   }
 </style>>

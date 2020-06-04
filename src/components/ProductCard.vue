@@ -6,16 +6,16 @@
       </div>
       <div class="card-content center">
         <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i></span>
-        <router-link :to="`/product/${product.id}`"><a id="productTitle">{{product.name}}</a></router-link>
+        <router-link :to="`/product/${product.id}`"><a id="productTitle" class="blue-text text-darken-3">{{product.name}}</a></router-link>
         <p class="left-align">Price: {{priceConverter(product.price)}}</p>
         <p class="left-align" v-if="product.stock > 0">Stock: {{product.stock}}</p>
         <p class="left-align" v-else>Stock: Empty</p>
         <div class="addProductBtn" v-if="product.stock > 0">
-          <button class="btn btn-small" @click.prevent="addProductToCart(product.id)"><i class="material-icons left">add_shopping_cart</i>Add to Cart</button>
+          <button class="btn btn-small blue darken-3 z-depth-1" @click.prevent="addProductToCart(product.id)"><i class="material-icons left">add_shopping_cart</i>Add to Cart</button>
         </div>
       </div>
       <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">{{product.name}}<i class="material-icons right">close</i></span>
+        <span class="card-title blue-text text-darken-3">{{product.name}}<i class="material-icons right">close</i></span>
         <h6 class="left-align">Category:</h6>
         <p class="left-align">{{product.category}}</p>
         <h6 class="left-align">Description:</h6>
@@ -165,7 +165,6 @@ export default {
   }
   #productTitle {
     font-weight: bolder;
-    color: blue;
     font-size: 16px;
   }
   h6 {
